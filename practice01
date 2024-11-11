@@ -1,0 +1,68 @@
+情境 1：單品查詢
+SELECT price,discount_price,stock FROM products
+WHERE name = '北歐風雙人沙發';
+
+情境 2：價格比較
+SELECT * FROM products
+WHERE discount_price < 5000
+	AND category = '櫃子';
+
+情境 3：庫存確認
+SELECT name,stock FROM products
+WHERE name = '日式雙人床架';
+
+情境 4：預算內的商品 客人：「想找 4 萬以下，而且有現貨的沙發」
+SELECT * FROM products
+WHERE category = '沙發'
+	AND discount_price < 40000
+  AND status = 'active';
+
+情境 5：特價且有貨
+SELECT * FROM products
+WHERE category = '沙發'
+	AND discount_price < price
+  AND status = 'active';
+
+情境 6：多分類查詢
+SELECT * FROM products
+WHERE category = '櫃子'
+	OR category = '桌子';
+
+情境 7：指定商品
+SELECT name,stock FROM products
+WHERE name = '北歐風雙人沙發'
+	OR name = '貓抓皮L型沙發';
+
+情境 8：多分類查詢
+SELECT * FROM products
+WHERE category IN ('沙發','櫃子','桌子');
+
+情境 9：特定商品
+SELECT name,price,discount_price FROM products
+WHERE name IN ('電腦辦公椅','餐椅四入組');
+
+情境 10：價格區間
+SELECT * FROM products
+WHERE price BETWEEN 10000 AND 20000;
+
+情境 11：庫存區間
+SELECT * FROM products
+WHERE stock BETWEEN 5 AND 15;
+
+情境 12：排除商品
+SELECT * FROM products
+WHERE category NOT IN ('沙發','床架');
+
+情境 13：調整價格
+UPDATE products
+SET price = price-2000
+WHERE name = '北歐風雙人沙發';
+
+情境 14：更新庫存
+UPDATE products
+SET stock = stock + 5
+WHERE name = '電腦辦公椅';
+
+情境 15：清除資料
+DELETE FROM products
+WHERE name IN ('兒童床架','電競書桌');
