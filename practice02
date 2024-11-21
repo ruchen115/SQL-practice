@@ -58,7 +58,7 @@ INSERT INTO teachers(name) VALUES
   ('李燕容');
 
 --在學生資料表新增教師欄位
-ALTER TABLE students ADD COLUMN teacher_id;
+ALTER TABLE students ADD COLUMN teacher_id INTEGER;
 
 --在學生資料表的教師欄位新增外來鍵
 ALTER TABLE students ADD FOREIGN KEY (teacher_id) REFERENCES teachers(id);
@@ -99,3 +99,87 @@ INNER JOIN teachers ON students.teacher_id = teachers.id;
 
 
 作業三：小孩的家庭歸類資料庫，父母資料一直重複實在討厭！
+
+--建立父母資料表
+CREATE TABLE parents(
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(30),
+  phone INTEGER,
+  gender VARCHAR(5)
+);
+
+--新增父母資料
+INSERT INTO parents(name,phone,gender) VALUES
+	('王大翔',0973254254,'男'),
+  ('王曉如',0955717855,'女');
+
+--在學生資料表新增父母欄位
+ALTER TABLE students ADD COLUMN parent_id INTEGER;
+
+--在學生資料表的父母欄位新增外來鍵
+ALTER TABLE students ADD FOREIGN KEY (parent_id) REFERENCES parents(id);
+
+--在學生資料表新增父母資料
+UPDATE students
+SET parent_id = 1
+WHERE id IN (1,3,5);
+
+UPDATE students
+SET parent_id = 2
+WHERE id IN (2,4);
+
+--顯示資料
+SELECT
+	students.id AS 學生編號,
+  students.name AS 學生姓名,
+  parents.name AS 父母姓名,
+  parents.phone AS 父母電話,
+  parents.gender AS 父母性別
+FROM students
+INNER JOIN parents ON students.parent_id = parents.id;
+
+
+
+同學出題：學校為了調查學生們的交通方式，大家都是家長接送，
+除了兩位同學，分別小強是搭飛機來，以及小智是步行來的
+
+--建立通勤資料表
+CREATE TABLE commutes(
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(30)
+);
+
+--新增通勤資料
+INSERT INTO commutes(name) VALUES
+  ('家長接送'),
+  ('飛機'),
+  ('步行');
+
+--在學生資料表新增通勤欄位和外來鍵
+ALTER TABLE students ADD COLUMN commute_id INTEGER;
+ALTER TABLE students ADD FOREIGN KEY (commute_id) REFERENCES commutes(id);
+
+--在學生資料表新增通勤資料
+UPDATE students
+SET commute_id = 1
+WHERE id IN (1,2,3);
+
+UPDATE students
+SET commute_id = 2
+WHERE id IN (4);
+
+UPDATE students
+SET commute_id = 3
+WHERE id IN (5);
+
+--顯示資料
+SELECT
+  students.id AS 學生編號,
+  students.name AS 姓名,
+  classes.name AS 班級,
+  students.gender AS 性別,
+  students.age AS 年齡,
+  commutes.name AS 交通方式
+FROM students
+INNER JOIN classes ON students.class_id = classes.id
+INNER JOIN commutes ON students.commute_id = commutes.id;
