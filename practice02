@@ -142,23 +142,23 @@ INNER JOIN parents ON students.parent_id = parents.id;
 
 同學出題：延伸作業一。學校想要了解學生喜歡什麼運動，小明,小美喜歡打羽球，小強喜歡打籃球，剩下的喜歡跑步
 
---建立通勤資料表
+--建立運動資料表
 CREATE TABLE sports(
   id SERIAL PRIMARY KEY,
   name VARCHAR(30)
 );
 
---新增通勤資料
+--新增運動資料
 INSERT INTO sports(name) VALUES
   ('羽球'),
   ('籃球'),
   ('跑步');
 
---在學生資料表新增通勤欄位和外來鍵
+--在學生資料表新增運動欄位和外來鍵
 ALTER TABLE students ADD COLUMN sport_id INTEGER;
 ALTER TABLE students ADD FOREIGN KEY (sport_id) REFERENCES sports(id);
 
---在學生資料表新增通勤資料
+--在學生資料表新增運動資料
 UPDATE students
 SET sport_id = 1
 WHERE id IN (1,3);
