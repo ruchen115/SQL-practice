@@ -18,12 +18,12 @@ CREATE TABLE students(
 
 --新增班級資料
 INSERT INTO classes(name) VALUES
-	('三年一班'),
+  ('三年一班'),
   ('三年二班');
 
 --新增學生資料
 INSERT INTO students(name,class_id,gender,age) VALUES
-	('小明',1,'男',8),
+  ('小明',1,'男',8),
   ('小華',2,'女',9),
   ('小美',1,'男',8),
   ('小強',1,'女',8),
@@ -31,7 +31,7 @@ INSERT INTO students(name,class_id,gender,age) VALUES
 
 --顯示資料
 SELECT
-	students.id AS 學生編號,
+  students.id AS 學生編號,
   students.name AS 姓名,
   classes.name AS 班級,
   students.gender AS 性別,
@@ -39,3 +39,63 @@ SELECT
 FROM students
 INNER JOIN classes ON students.class_id = classes.id;
 
+
+
+作業二：第一題的延伸，多了一個班級老師
+
+--建立教師資料表
+CREATE TABLE teachers(
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(30)
+);
+
+--新增教師資料
+INSERT INTO teachers(name) VALUES
+  ('廖洧杰'),
+  ('卡斯伯'),
+  ('查理'),
+  ('麥可'),
+  ('李燕容');
+
+--在學生資料表新增教師欄位
+ALTER TABLE students ADD COLUMN teacher_id;
+
+--在學生資料表的教師欄位新增外來鍵
+ALTER TABLE students ADD FOREIGN KEY (teacher_id) REFERENCES teachers(id);
+
+--在學生資料表新增教師資料
+UPDATE students
+SET teacher_id = 1
+WHERE id = 1;
+
+UPDATE students
+SET teacher_id = 2
+WHERE id = 2;
+
+UPDATE students
+SET teacher_id = 3
+WHERE id = 3;
+
+UPDATE students
+SET teacher_id = 4
+WHERE id = 4;
+
+UPDATE students
+SET teacher_id = 5
+WHERE id = 5;
+
+--顯示資料
+SELECT
+  students.id AS 學生編號,
+  students.name AS 姓名,
+  classes.name AS 班級,
+  students.gender AS 性別,
+  students.age AS 年齡,
+  teachers.name AS 班級老師
+FROM students
+INNER JOIN classes ON students.class_id = classes.id
+INNER JOIN teachers ON students.teacher_id = teachers.id;
+
+
+
+作業三：小孩的家庭歸類資料庫，父母資料一直重複實在討厭！
