@@ -140,29 +140,28 @@ INNER JOIN parents ON students.parent_id = parents.id;
 
 
 
-同學出題：學校為了調查學生們的交通方式，大家都是家長接送，
-除了兩位同學，分別小強是搭飛機來，以及小智是步行來的
+同學出題：延伸作業一。學校想要了解學生喜歡什麼運動，小明,小美喜歡打羽球，小強喜歡打籃球，剩下的喜歡跑步
 
 --建立通勤資料表
-CREATE TABLE commutes(
+CREATE TABLE sports(
   id SERIAL PRIMARY KEY,
   name VARCHAR(30)
 );
 
 --新增通勤資料
-INSERT INTO commutes(name) VALUES
-  ('家長接送'),
-  ('飛機'),
-  ('步行');
+INSERT INTO sports(name) VALUES
+  ('羽球'),
+  ('籃球'),
+  ('跑步');
 
 --在學生資料表新增通勤欄位和外來鍵
-ALTER TABLE students ADD COLUMN commute_id INTEGER;
-ALTER TABLE students ADD FOREIGN KEY (commute_id) REFERENCES commutes(id);
+ALTER TABLE students ADD COLUMN sport_id INTEGER;
+ALTER TABLE students ADD FOREIGN KEY (sport_id) REFERENCES sports(id);
 
 --在學生資料表新增通勤資料
 UPDATE students
-SET commute_id = 1
-WHERE id IN (1,2,3);
+SET sport_id = 1
+WHERE id IN (1,3);
 
 UPDATE students
 SET commute_id = 2
@@ -170,7 +169,7 @@ WHERE id IN (4);
 
 UPDATE students
 SET commute_id = 3
-WHERE id IN (5);
+WHERE id IN (2,5);
 
 --顯示資料
 SELECT
@@ -179,7 +178,7 @@ SELECT
   classes.name AS 班級,
   students.gender AS 性別,
   students.age AS 年齡,
-  commutes.name AS 交通方式
+  sports.name AS 運動
 FROM students
 INNER JOIN classes ON students.class_id = classes.id
-INNER JOIN commutes ON students.commute_id = commutes.id;
+INNER JOIN commutes ON students.sport_id = sports.id;
