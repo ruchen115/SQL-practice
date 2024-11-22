@@ -164,11 +164,11 @@ SET sport_id = 1
 WHERE id IN (1,3);
 
 UPDATE students
-SET commute_id = 2
+SET sport_id = 2
 WHERE id IN (4);
 
 UPDATE students
-SET commute_id = 3
+SET sport_id = 3
 WHERE id IN (2,5);
 
 --顯示資料
@@ -181,4 +181,4 @@ SELECT
   sports.name AS 運動
 FROM students
 INNER JOIN classes ON students.class_id = classes.id
-INNER JOIN commutes ON students.sport_id = sports.id;
+INNER JOIN students ON students.sport_id = sports.id;
